@@ -16,6 +16,7 @@ public class UIVIew extends BaseView {
     private var _browseMC:basebutton;
     private var _horizontalLine:Shape;
     public var browseSignal:Signal;
+    private var _hudWidth:int = 0;
     public function UIVIew() {
         browseSignal = new Signal();
         super();
@@ -27,12 +28,22 @@ public class UIVIew extends BaseView {
         _browseBtn = new ButtonView(_browseMC);
         _browseBtn.addEventListener(MouseEvent.CLICK, onBrowseClick);
         _horizontalLine = new Shape();
-        _horizontalLine.graphics.lineStyle(4,0x0000FF);
-        _horizontalLine.graphics.lineTo(stage.stageWidth, 0);
-        _horizontalLine.y = _browseMC.height + 1;
+        drawHorizontalLine();
         addChild(_browseMC);
         addChild(_horizontalLine);
         super.createChildren();
+    }
+
+    public function set hudWidth(value:int):void {
+        _hudWidth = value;
+        drawHorizontalLine();
+    }
+
+    private function drawHorizontalLine():void {
+        _horizontalLine.graphics.clear();
+        _horizontalLine.graphics.lineStyle(4,0x0000FF);
+        _horizontalLine.graphics.lineTo(_hudWidth, 0);
+        _horizontalLine.y = _browseMC.height + 1;
     }
 
     private function onBrowseClick(event:MouseEvent):void {

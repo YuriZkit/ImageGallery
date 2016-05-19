@@ -4,6 +4,7 @@
 package base {
 import flash.display.Sprite;
 import flash.events.Event;
+
 [Event(name="complete", type="flash.events.Event")]
 public class BaseView extends Sprite {
     public function BaseView() {

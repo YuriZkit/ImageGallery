@@ -3,43 +3,37 @@
  */
 package viewer.services {
 import flash.display.Bitmap;
-import flash.display.Bitmap;
 import flash.display.Loader;
 import flash.display.LoaderInfo;
 import flash.events.Event;
 import flash.events.FileListEvent;
-import flash.filesystem.FileMode;
-import flash.filesystem.FileStream;
-import flash.net.FileFilter;
-import flash.utils.ByteArray;
-import flash.utils.CompressionAlgorithm;
-
-import viewer.events.ImageEvent;
-
-import flash.display.BitmapData;
-
 import flash.filesystem.File;
+import flash.net.FileFilter;
 
 import org.robotlegs.mvcs.Actor;
 
-public class LocalFileLoaderService extends Actor implements IFileLoaderService{
+import viewer.events.ImageEvent;
+
+public class LocalFileLoaderService extends Actor implements IFileLoaderService {
 
     public static const IMAGE_FILTER:FileFilter = new FileFilter("Images", "*.jpg;*.gif;*.png");
-    private var fileBrowser:File;
-    private var filesToLoad:Array;
 
     public function LocalFileLoaderService() {
         super();
         fileBrowser = new File();
     }
-
-    public function loadFileList(list:Array):void {
-    }
+    private var fileBrowser:File;
+    private var filesToLoad:Array;
 
     public function browse():void {
-        fileBrowser.addEventListener(FileListEvent.SELECT_MULTIPLE, onSelectedBrowser)
+        fileBrowser.addEventListener(FileListEvent.SELECT_MULTIPLE, onSelectedBrowser);
         fileBrowser.addEventListener(Event.CANCEL, onCancelBrowser);
         fileBrowser.browseForOpenMultiple("Choose Images", [IMAGE_FILTER]);
+    }
+
+    public function loadFile(file:File):void {
+        file.addEventListener(Event.COMPLETE, onFileLoaded);
+        file.load();
     }
 
     private function onCancelBrowser(event:Event):void {
@@ -48,27 +42,20 @@ public class LocalFileLoaderService extends Actor implements IFileLoaderService{
 
     private function onSelectedBrowser(event:FileListEvent):void {
         filesToLoad = event.files;
-        loadFileTemp(filesToLoad.pop());
-    }
-
-
-    public function loadFile(path:String):void {
-    }
-
-    private function loadFileTemp(file:File):void {
-        file.addEventListener(Event.COMPLETE, onFileLoaded);
-        file.load();
+        while (filesToLoad.length > 0) {
+            loadFile(filesToLoad.pop());
+        }
     }
 
     private function onFileLoaded(event:Event):void {
-        var loader:Loader = new Loader();
-        loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onImageLoaded);
-        loader.loadBytes((event.target as File).data);
-        trace(event);
-        //dispatch(new ImageEvent(ImageEvent.IMAGE_LOADED))
+        event.currentTarget.removeEventListener(Event.COMPLETE, onFileLoaded);
+        var imageLoader:Loader = new Loader();
+        imageLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onImageLoaded);
+        imageLoader.loadBytes((event.target as File).data);
     }
 
     private function onImageLoaded(event:Event):void {
+        event.currentTarget.removeEventListener(Event.COMPLETE, onImageLoaded);
         var bmp:Bitmap = (event.currentTarget as LoaderInfo).content as Bitmap;
         dispatch(new ImageEvent(ImageEvent.IMAGE_LOADED, bmp));
     }

@@ -7,19 +7,28 @@ import flash.display.BitmapData;
 import flash.geom.Point;
 
 public class ImageRenderer extends Bitmap {
-    private var _width:int;
-    private var _height:int;
+    private var _height:Number;
+    private var _width:Number;
     private var pivot:Point;
-    public function ImageRenderer(bitmapData:BitmapData = null, width:int = 100, heigth:int = 100, pixelSnapping:String = "auto", smoothing:Boolean = false) {
-        _width = width;
-        _height = heigth;
+    private var aspectRation:Point
+    public function ImageRenderer(bitmapData:BitmapData = null, heigth:uint = 100, pixelSnapping:String = "auto", smoothing:Boolean = false) {
         pivot = new Point(0,0);
         super(bitmapData, "auto", true);
-        resize();
+        imageHeight = heigth;
+    }
+    public function set imageHeight(value:Number):void {
+        if(_height != value) {
+            _height = value;
+            resize();
+        }
     }
 
-    private function resize():void{
-        var heightDif:Number = _height / height;
+    public function get imageHeight():Number {
+        return _height;
+    }
+
+    public function resize():void{
+        var heightDif:Number = _height / bitmapData.height;
             scaleX = scaleY = heightDif;
     }
 }

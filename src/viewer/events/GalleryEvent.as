@@ -5,10 +5,21 @@ package viewer.events {
 import flash.events.Event;
 
 public class GalleryEvent extends Event {
-    public static const IMAGE_LIST_CHANGED:String = "image_list_changed";
-    public static const UI_CREATED:String = "ui_created";
-    public function GalleryEvent(type:String, bubbles:Boolean = false, cancelable:Boolean = false) {
+    public static const RESIZE:String = "resize";
+    private var _width:int;
+    private var _height:int;
+    public function GalleryEvent(type:String, width:int, height:int, bubbles:Boolean = false, cancelable:Boolean = false) {
+        _width = width;
+        _height = height;
         super(type, bubbles, cancelable);
+    }
+
+    public function get width():int{
+        return _width;
+    }
+
+    public function get height():int{
+        return _height;
     }
 }
 }
