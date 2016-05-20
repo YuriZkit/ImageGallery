@@ -11,6 +11,9 @@
             <entry library-name="assets" library-level="project">
               <dependency linkage="Merged" />
             </entry>
+            <entry library-name="libs" library-level="project">
+              <dependency linkage="Merged" />
+            </entry>
           </entries>
           <sdk name="21.0.0.176" />
         </dependencies>
@@ -33,5 +36,6 @@
     <orderEntry type="library" exported="" name="fl" level="project" />
     <orderEntry type="library" exported="" name="assets" level="project" />
     <orderEntry type="library" exported="" name="signals" level="project" />
+    <orderEntry type="library" exported="" name="libs" level="project" />
   </component>
 </module>

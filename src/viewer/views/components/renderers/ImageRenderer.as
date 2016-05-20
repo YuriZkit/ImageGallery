@@ -4,17 +4,20 @@
 package viewer.views.components.renderers {
 import flash.display.Bitmap;
 import flash.display.BitmapData;
+import flash.display.PixelSnapping;
+import flash.geom.Matrix;
 import flash.geom.Point;
+import flash.geom.Rectangle;
 
 public class ImageRenderer extends Bitmap {
     private var _height:Number;
-    private var _width:Number;
     private var pivot:Point;
-    private var aspectRation:Point
-    public function ImageRenderer(bitmapData:BitmapData = null, heigth:uint = 100, pixelSnapping:String = "auto", smoothing:Boolean = false) {
+    public function ImageRenderer(bitmapData:BitmapData = null, idealHeight:uint = 100, pixelSnapping:String = "never", smoothing:Boolean = true) {
         pivot = new Point(0,0);
+        trace("new Image", bitmapData.height / idealHeight);
         super(bitmapData, "auto", true);
-        imageHeight = heigth;
+        imageHeight = idealHeight;
+
     }
     public function set imageHeight(value:Number):void {
         if(_height != value) {

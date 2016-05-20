@@ -1,6 +1,7 @@
 package base.ui {
 
 import flash.display.MovieClip;
+import flash.display.Sprite;
 import flash.events.Event;
 import flash.events.EventDispatcher;
 import flash.events.MouseEvent;
@@ -11,11 +12,12 @@ public class ButtonView extends EventDispatcher {
     protected static const STATE_OVER:uint = 1;
     protected static const STATE_DOWN:uint = 2;
     protected static const STATE_DISABLED:uint = 3;
+    protected var _mcHitArea:MovieClip;
     protected var _target:MovieClip;
 
     public function ButtonView(target:MovieClip) {
         _target = target;
-        _target.useHandCursor = true;
+        setHitArea();
         state = STATE_NORMAL;
         updateEnableState();
     }
@@ -27,6 +29,27 @@ public class ButtonView extends EventDispatcher {
     public function set enable(value:Boolean):void {
         _target.enabled = value;
         updateEnableState();
+    }
+
+    protected function setHitArea(mcHitArea:MovieClip = null):void
+    {
+        if(!mcHitArea) {
+            if(_target.hasOwnProperty("hit"))
+            {
+                _mcHitArea = _target.getChildByName("hit") as MovieClip;
+            }
+        } else {
+            _mcHitArea = mcHitArea;
+        }
+
+        if(_mcHitArea)
+        {
+            _target.hitArea = _mcHitArea;
+            _mcHitArea.mouseEnabled = false;
+            _mcHitArea.visible = false;
+        }
+        _target.mouseChildren = false;
+        _target.useHandCursor = true;
     }
 
     public function get state():uint {

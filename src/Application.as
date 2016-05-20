@@ -39,8 +39,8 @@ public class Application extends Sprite {
     }
 
     private function updateViewPorts(event:TimerEvent):void{
-        galleryView.viewRect = new Rectangle(0,0,
-                stage.stageWidth, stage.stageHeight - uiView.height - galleryView.y);
+        galleryView.viewRect = new Rectangle(0, uiView.height + 1,
+                stage.stageWidth, stage.stageHeight - uiView.height);
         uiView.hudWidth = stage.stageWidth;
     }
 
