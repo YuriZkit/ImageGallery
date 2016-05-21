@@ -9,13 +9,13 @@ import flash.geom.Matrix;
 import flash.geom.Point;
 import flash.geom.Rectangle;
 
-public class ImageRenderer extends Bitmap {
+public class ImageView extends Bitmap {
     private var _height:Number;
     private var pivot:Point;
-    public function ImageRenderer(bitmapData:BitmapData = null, idealHeight:uint = 100, pixelSnapping:String = "never", smoothing:Boolean = true) {
+    public function ImageView(bitmapData:BitmapData = null, idealHeight:uint = 100, pixelSnapping:String = "always", smoothing:Boolean = true) {
         pivot = new Point(0,0);
         trace("new Image", bitmapData.height / idealHeight);
-        super(bitmapData, "auto", true);
+        super(bitmapData, pixelSnapping, smoothing);
         imageHeight = idealHeight;
 
     }

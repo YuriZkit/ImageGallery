@@ -16,7 +16,7 @@ public class DragButtonView extends ButtonView {
     private var _dragRect:Rectangle;
     public var positionChangeSignal:Signal;
     private var _dragPosition:Point = new Point(0,0);
-    private var _dragTimer:Timer = new Timer(50);
+    private var _dragTimer:Timer = new Timer(10);
     public function DragButtonView(target:MovieClip) {
         super(target);
         positionChangeSignal = new Signal();
@@ -37,13 +37,15 @@ public class DragButtonView extends ButtonView {
         _dragTimer.addEventListener(TimerEvent.TIMER, onDragUpdate);
         _dragTimer.start();
     }
-
     private function onDragUpdate(event:Event):void {
         _dragPosition.y = (_target.y - _dragRect.y) / _dragRect.height;
         _dragPosition.x = (_target.x - _dragRect.x) / _dragRect.width;
         positionChangeSignal.dispatch(_dragPosition);
     }
-
+    public function updatePosition(xPos:Number, yPos:Number):void {
+        _target.y = (yPos * (_dragRect.height) + _dragRect.y);
+       // _target.x = (xPos * (_dragRect.width)  + _dragRect.x);
+    }
 
     override protected function actionUp(event:Event):void {
         super.actionUp(event);

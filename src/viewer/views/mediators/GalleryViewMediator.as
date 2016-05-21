@@ -2,6 +2,7 @@
  * Created by YuriZkit-Adm on 5/16/2016.
  */
 package viewer.views.mediators {
+
 import org.robotlegs.mvcs.Mediator;
 
 import viewer.models.ViewerModel;
@@ -17,10 +18,17 @@ public class GalleryViewMediator extends Mediator {
     override public function onRegister():void {
         view.createChildren();
         model.changeSignal.add(updateImages);
+        model.resizeSignal.add(resize)
     }
 
-    public function updateImages():void{
+    public function resize(width:Number, height:Number):void {
+        view.resize(width, height);
+        view.updatePositions();
+    }
+
+    public function updateImages():void {
         view.updateImages(model.imagesList);
+        view.updatePositions();
     }
 }
 }

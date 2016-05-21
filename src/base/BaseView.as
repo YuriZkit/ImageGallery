@@ -15,6 +15,10 @@ public class BaseView extends Sprite {
         dispatchEvent(new Event(Event.COMPLETE));
     }
 
+    public function resize(width:Number, height:Number):void {
+
+    }
+
     public function destroy():void {
         while (numChildren){
             removeChildAt(0);

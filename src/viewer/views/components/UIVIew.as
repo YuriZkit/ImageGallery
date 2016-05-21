@@ -34,8 +34,9 @@ public class UIVIew extends BaseView {
         super.createChildren();
     }
 
-    public function set hudWidth(value:int):void {
-        _hudWidth = value;
+    override public function resize(width:Number, height:Number):void {
+        super.resize(width, height);
+        _hudWidth = width;
         drawHorizontalLine();
     }
 
