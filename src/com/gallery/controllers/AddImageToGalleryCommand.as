@@ -1,10 +1,11 @@
 /**
  * Created by YuriZkit-Adm on 5/16/2016.
  */
-package viewer.controllers {
+package com.gallery.controllers {
+import com.gallery.events.FileLoaderServiceEvent;
+import com.gallery.models.ViewerModel;
+
 import org.robotlegs.mvcs.Command;
-import viewer.events.FileLoaderServiceEvent;
-import viewer.models.ViewerModel;
 
 public class AddImageToGalleryCommand extends Command {
     [Inject]

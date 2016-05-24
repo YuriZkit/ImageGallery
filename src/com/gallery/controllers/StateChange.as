@@ -1,12 +1,11 @@
 /**
  * Created by ymakarov on 24.05.2016.
  */
-package viewer.controllers {
+package com.gallery.controllers {
+import com.gallery.models.ViewerModel;
+
 import org.robotlegs.mvcs.Command;
 import org.robotlegs.utilities.statemachine.StateEvent;
-
-
-import viewer.models.ViewerModel;
 
 public class StateChange extends Command {
 

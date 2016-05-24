@@ -1,20 +1,21 @@
 /**
  * Created by YuriZkit-Adm on 5/22/2016.
  */
-package viewer.views.components {
+package com.gallery.views.components {
 import base.BaseView;
 
 import flash.text.TextField;
 
-public class LoadingView extends BaseView {
-    public function LoadingView() {
+public class WelcomeView extends BaseView {
+    public function WelcomeView() {
         super();
     }
+    private var textField:TextField;
 
     override public function createChildren():void {
         super.createChildren();
-        var textField:TextField = new TextField();
-        textField.htmlText = "LOADING";
+        textField = new TextField();
+        textField.htmlText = "Hello Test";
         addChild(textField);
     }
 }

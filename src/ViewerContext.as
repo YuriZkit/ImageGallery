@@ -7,27 +7,27 @@ import flash.display.DisplayObjectContainer;
 import org.robotlegs.base.ContextEvent;
 import org.robotlegs.mvcs.Context;
 
-import viewer.controllers.AddImageToGalleryCommand;
-import viewer.controllers.BrowseCommand;
-import viewer.controllers.ChangeImageSize;
-import viewer.controllers.DisplayImagesCommand;
-import viewer.controllers.InitStateMachine;
-import viewer.controllers.ResizeCommand;
-import viewer.events.FileLoaderServiceEvent;
-import viewer.events.GalleryEvent;
-import viewer.events.UIEvent;
-import viewer.models.ViewerModel;
-import viewer.services.IFileLoaderService;
-import viewer.services.LocalFileLoaderService;
-import viewer.views.components.GalleryView;
-import viewer.views.components.LoadingView;
-import viewer.views.components.UIVIew;
-import viewer.views.components.WelcomeView;
-import viewer.views.mediators.ApplicationMediator;
-import viewer.views.mediators.GalleryViewMediator;
-import viewer.views.mediators.LoadingViewMediator;
-import viewer.views.mediators.UIViewMediator;
-import viewer.views.mediators.WelcomeViewMediator;
+import com.gallery.controllers.AddImageToGalleryCommand;
+import com.gallery.controllers.BrowseCommand;
+import com.gallery.controllers.ChangeImageSize;
+import com.gallery.controllers.DisplayImagesCommand;
+import com.gallery.controllers.InitStateMachine;
+import com.gallery.controllers.ResizeCommand;
+import com.gallery.events.FileLoaderServiceEvent;
+import com.gallery.events.GalleryEvent;
+import com.gallery.events.TopHudEvent;
+import com.gallery.models.ViewerModel;
+import com.gallery.services.IFileLoaderService;
+import com.gallery.services.LocalFileLoaderService;
+import com.gallery.views.components.GalleryView;
+import com.gallery.views.components.LoadingView;
+import com.gallery.views.components.TopHUDView;
+import com.gallery.views.components.WelcomeView;
+import com.gallery.views.mediators.ApplicationMediator;
+import com.gallery.views.mediators.GalleryMediator;
+import com.gallery.views.mediators.LoadingMediator;
+import com.gallery.views.mediators.TopHudMediator;
+import com.gallery.views.mediators.WelcomeMediator;
 
 public class ViewerContext extends Context {
     public function ViewerContext(contextView:DisplayObjectContainer = null, autoStartup:Boolean = true) {
@@ -36,23 +36,23 @@ public class ViewerContext extends Context {
 
     override public function startup():void {
         injector.mapSingleton(ViewerModel);
-        injector.mapSingleton(UIVIew);
+        injector.mapSingleton(TopHUDView);
         injector.mapSingletonOf(IFileLoaderService, LocalFileLoaderService);
 
         commandMap.mapEvent(ContextEvent.STARTUP, InitStateMachine, ContextEvent, true);
         commandMap.mapEvent(GalleryEvent.RESIZE, ResizeCommand, GalleryEvent);
         commandMap.mapEvent(FileLoaderServiceEvent.IMAGE_LOADED, AddImageToGalleryCommand, FileLoaderServiceEvent);
         commandMap.mapEvent(FileLoaderServiceEvent.ALL_FILES_LOADED, DisplayImagesCommand, FileLoaderServiceEvent);
-        commandMap.mapEvent(UIEvent.ACTION_BROWSE, BrowseCommand, UIEvent);
-        commandMap.mapEvent(UIEvent.ACTION_IMAGE_SIZE, ChangeImageSize, UIEvent);
+        commandMap.mapEvent(TopHudEvent.ACTION_BROWSE, BrowseCommand, TopHudEvent);
+        commandMap.mapEvent(TopHudEvent.ACTION_IMAGE_SIZE, ChangeImageSize, TopHudEvent);
 
-        mediatorMap.mapView(GalleryView, GalleryViewMediator);
-        mediatorMap.mapView(UIVIew, UIViewMediator);
+        mediatorMap.mapView(GalleryView, GalleryMediator);
+        mediatorMap.mapView(TopHUDView, TopHudMediator);
         mediatorMap.mapView(Application, ApplicationMediator);
-        mediatorMap.mapView(WelcomeView, WelcomeViewMediator);
-        mediatorMap.mapView(LoadingView, LoadingViewMediator);
+        mediatorMap.mapView(WelcomeView, WelcomeMediator);
+        mediatorMap.mapView(LoadingView, LoadingMediator);
 
-        var uiViewDisplayObject = contextView.addChild(new UIVIew());
+        var uiViewDisplayObject = contextView.addChild(new TopHUDView());
         contextView.y           = uiViewDisplayObject.height;
         uiViewDisplayObject.y   = -uiViewDisplayObject.height;
 

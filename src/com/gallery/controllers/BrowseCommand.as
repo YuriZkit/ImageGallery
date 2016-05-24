@@ -1,12 +1,10 @@
 /**
  * Created by YuriZkit-Adm on 5/17/2016.
  */
-package viewer.controllers {
+package com.gallery.controllers {
+import com.gallery.services.IFileLoaderService;
+
 import org.robotlegs.mvcs.Command;
-
-import viewer.events.UIEvent;
-
-import viewer.services.IFileLoaderService;
 
 public class BrowseCommand extends Command {
     [Inject]

@@ -20,7 +20,7 @@ public class BaseView extends Sprite {
     }
 
     public function destroy():void {
-        while (numChildren){
+        while (numChildren) {
             removeChildAt(0);
         }
     }

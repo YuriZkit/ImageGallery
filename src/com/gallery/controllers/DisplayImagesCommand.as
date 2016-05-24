@@ -1,16 +1,17 @@
 /**
  * Created by YuriZkit-Adm on 5/22/2016.
  */
-package viewer.controllers {
+package com.gallery.controllers {
+import com.gallery.views.components.GalleryView;
+
 import org.robotlegs.mvcs.Command;
 
-import viewer.views.components.LoadingView;
+public class DisplayImagesCommand extends Command {
 
-public class DisplayLoaderCommand extends Command {
     override public function execute():void {
         super.execute();
         contextView.removeChildAt(0);
-        contextView.addChildAt(new LoadingView(),0);
+        contextView.addChildAt(new GalleryView(), 0);
     }
 }
 }

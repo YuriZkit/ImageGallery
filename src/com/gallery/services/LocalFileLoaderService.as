@@ -1,7 +1,10 @@
 /**
  * Created by YuriZkit-Adm on 5/16/2016.
  */
-package viewer.services {
+package com.gallery.services {
+import com.gallery.events.FileLoaderServiceEvent;
+import com.gallery.models.GalleryState;
+
 import flash.display.Bitmap;
 import flash.display.Loader;
 import flash.display.LoaderInfo;
@@ -9,13 +12,9 @@ import flash.events.Event;
 import flash.events.FileListEvent;
 import flash.filesystem.File;
 import flash.net.FileFilter;
-import flash.utils.Dictionary;
 
 import org.robotlegs.mvcs.Actor;
 import org.robotlegs.utilities.statemachine.StateEvent;
-
-import viewer.events.FileLoaderServiceEvent;
-import viewer.models.StateConfig;
 
 public class LocalFileLoaderService extends Actor implements IFileLoaderService {
 
@@ -25,6 +24,7 @@ public class LocalFileLoaderService extends Actor implements IFileLoaderService 
         super();
         fileBrowser = new File();
     }
+
     private var fileBrowser:File;
     private var filesToLoad:uint;
 
@@ -44,9 +44,9 @@ public class LocalFileLoaderService extends Actor implements IFileLoaderService 
     }
 
     private function onSelectedBrowser(event:FileListEvent):void {
-        dispatch(new StateEvent(StateEvent.ACTION, StateConfig.LOADING_STARTED));
+        dispatch(new StateEvent(StateEvent.ACTION, GalleryState.LOADING_STARTED));
         filesToLoad = event.files.length;
-        for(var i:uint = 0; i < filesToLoad; i++){
+        for (var i:uint = 0; i < filesToLoad; i++) {
             loadFile(event.files[i]);
         }
     }
@@ -63,8 +63,8 @@ public class LocalFileLoaderService extends Actor implements IFileLoaderService 
         var bmp:Bitmap = (event.currentTarget as LoaderInfo).content as Bitmap;
         dispatch(new FileLoaderServiceEvent(FileLoaderServiceEvent.IMAGE_LOADED, bmp));
         filesToLoad--;
-        if(filesToLoad == 0) {
-            dispatch(new StateEvent(StateEvent.ACTION, StateConfig.LOADING_COMPLETED));
+        if (filesToLoad == 0) {
+            dispatch(new StateEvent(StateEvent.ACTION, GalleryState.LOADING_COMPLETED));
         }
     }
 }
