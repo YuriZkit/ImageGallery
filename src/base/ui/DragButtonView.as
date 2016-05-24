@@ -34,17 +34,23 @@ public class DragButtonView extends ButtonView {
         super.actionDown(event);
         _target.startDrag(false,_dragRect);
         _target.stage.addEventListener(MouseEvent.MOUSE_UP, actionUp);
-        _dragTimer.addEventListener(TimerEvent.TIMER, onDragUpdate);
+        _target.stage.addEventListener(MouseEvent.MOUSE_MOVE, onDragUpdate);
         _dragTimer.start();
     }
-    private function onDragUpdate(event:Event):void {
+    private function onDragUpdate(event:Event = null):void {
+        var newPos:Point = new Point();
+        newPos.x = (_target.x - _dragRect.x) / _dragRect.width;
+        newPos.y = (_target.y - _dragRect.y) / _dragRect.height;
         _dragPosition.y = (_target.y - _dragRect.y) / _dragRect.height;
         _dragPosition.x = (_target.x - _dragRect.x) / _dragRect.width;
         positionChangeSignal.dispatch(_dragPosition);
     }
     public function updatePosition(xPos:Number, yPos:Number):void {
+        yPos = (yPos > 1)?1:(yPos<0)?0:yPos;
+        xPos = (xPos > 1)?1:(xPos<0)?0:xPos;
+        _target.x = (xPos * (_dragRect.width)  + _dragRect.x);
         _target.y = (yPos * (_dragRect.height) + _dragRect.y);
-       // _target.x = (xPos * (_dragRect.width)  + _dragRect.x);
+        onDragUpdate();
     }
 
     override protected function actionUp(event:Event):void {

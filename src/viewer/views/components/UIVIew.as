@@ -6,6 +6,10 @@ import assets.basebutton;
 
 import base.BaseView;
 import base.ui.ButtonView;
+
+import fl.controls.Slider;
+import fl.events.SliderEvent;
+
 import flash.display.Shape;
 import flash.events.MouseEvent;
 
@@ -13,31 +17,63 @@ import org.osflash.signals.Signal;
 
 public class UIVIew extends BaseView {
     private var _browseBtn:ButtonView;
+    private var _selectBtn:ButtonView;
     private var _browseMC:basebutton;
+    private var _selectMC:basebutton;
     private var _horizontalLine:Shape;
+    private var _sliderMC:Slider;
     public var browseSignal:Signal;
+    public var imageSizeChange:Signal;
     private var _hudWidth:int = 0;
     public function UIVIew() {
         browseSignal = new Signal();
+        imageSizeChange = new Signal();
+        name = "uiView";
         super();
     }
 
     override public function createChildren():void {
         _browseMC = new basebutton();
-        _browseMC.txt.text = "BROWSE";
+        _selectMC = new basebutton();
+        _browseMC.txt.text = "ADD";
+        _selectMC.txt.text = "SELECT";
         _browseBtn = new ButtonView(_browseMC);
+        _selectBtn = new ButtonView(_selectMC);
         _browseBtn.addEventListener(MouseEvent.CLICK, onBrowseClick);
+        _selectBtn.addEventListener(MouseEvent.CLICK, onSelectClick);
         _horizontalLine = new Shape();
+
+        _browseMC.x = 5;
+        _selectMC.x = _browseMC.x + _browseMC.width + 5;
+
+        _sliderMC = new Slider();
+        _sliderMC.maximum = 4;
+        _sliderMC.tickInterval = 1;
+        _sliderMC.value = 2;
+        _sliderMC.setSize(150,5);
+        _sliderMC.addEventListener(SliderEvent.CHANGE, onSliderChanged);
         drawHorizontalLine();
         addChild(_browseMC);
         addChild(_horizontalLine);
+        addChild(_sliderMC);
+        addChild(_selectMC);
         super.createChildren();
+    }
+
+    private function onSelectClick(event:MouseEvent):void {
+
+    }
+
+    private function onSliderChanged(event:SliderEvent):void {
+        imageSizeChange.dispatch(event.value);
     }
 
     override public function resize(width:Number, height:Number):void {
         super.resize(width, height);
         _hudWidth = width;
         drawHorizontalLine();
+        _sliderMC.y = _horizontalLine.y/2 - _sliderMC.height;
+        _sliderMC.x = _hudWidth - _sliderMC.width - 50;
     }
 
     private function drawHorizontalLine():void {

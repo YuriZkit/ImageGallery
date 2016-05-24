@@ -3,6 +3,7 @@
  */
 package viewer.views.mediators {
 
+
 import org.robotlegs.mvcs.Mediator;
 
 import viewer.models.ViewerModel;
@@ -16,9 +17,17 @@ public class GalleryViewMediator extends Mediator {
     public var model:ViewerModel;
 
     override public function onRegister():void {
+        view.imageIdealHeight = model.imageIdealHeight;
         view.createChildren();
-        model.changeSignal.add(updateImages);
-        model.resizeSignal.add(resize)
+        model.resizeSignal.add(resize);
+        model.imageSizeChangedSignal.add(onImageSizeChanged);
+        resize(model.width,model.height);
+        updateImages();
+    }
+
+    private function onImageSizeChanged():void {
+        view.imageIdealHeight = model.imageIdealHeight;
+        view.updatePositions();
     }
 
     public function resize(width:Number, height:Number):void {

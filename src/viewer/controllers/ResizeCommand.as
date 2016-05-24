@@ -14,7 +14,7 @@ public class ResizeCommand extends Command {
     [Inject]
     public var galleryModel:ViewerModel;
     override public function execute():void {
-        galleryModel.resize(event.width, event.height);
+        galleryModel.resize(event.width, event.height - contextView.getChildAt(1).height);
         super.execute();
     }
 }

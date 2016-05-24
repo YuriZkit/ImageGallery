@@ -20,7 +20,12 @@ public class UIViewMediator extends Mediator {
     override public function onRegister():void {
         view.createChildren();
         view.browseSignal.add(onBrowseSignal);
+        view.imageSizeChange.add(onImageSizeChanged);
         model.resizeSignal.add(view.resize);
+    }
+
+    private function onImageSizeChanged(value:uint):void {
+        dispatch(new UIEvent(UIEvent.ACTION_IMAGE_SIZE, value));
     }
 
     private function onBrowseSignal():void {

@@ -16,7 +16,7 @@ public class ApplicationMediator extends Mediator {
     private var resizeTimer:Timer;
     override public function onRegister():void {
         super.onRegister();
-        resizeTimer = new Timer(500,1);
+        resizeTimer = new Timer(100,1);
         eventMap.mapListener(resizeTimer,TimerEvent.TIMER_COMPLETE, callResizeCommand);
         eventMap.mapListener(view.stage, Event.RESIZE, onResize);
     }

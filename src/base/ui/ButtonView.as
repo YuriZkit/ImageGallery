@@ -30,6 +30,9 @@ public class ButtonView extends EventDispatcher {
         _target.enabled = value;
         updateEnableState();
     }
+    public function get enable():Boolean {
+        return _target.enabled;
+    }
 
     protected function setHitArea(mcHitArea:MovieClip = null):void
     {

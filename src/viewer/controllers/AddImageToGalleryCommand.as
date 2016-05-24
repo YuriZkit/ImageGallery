@@ -3,12 +3,12 @@
  */
 package viewer.controllers {
 import org.robotlegs.mvcs.Command;
-import viewer.events.ImageEvent;
+import viewer.events.FileLoaderServiceEvent;
 import viewer.models.ViewerModel;
 
 public class AddImageToGalleryCommand extends Command {
     [Inject]
-    public var event:ImageEvent;
+    public var event:FileLoaderServiceEvent;
     [Inject]
     public var model:ViewerModel;
 
