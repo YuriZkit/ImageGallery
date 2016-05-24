@@ -24,13 +24,11 @@ public class ButtonView extends EventDispatcher {
     protected var _currentState:uint = 0;
     protected var _prevState:int = 0;
 
-    protected var _enable:Boolean = true;
-
-    public function set enable(value:Boolean):void {
+    public function set enabled(value:Boolean):void {
         _target.enabled = value;
         updateEnableState();
     }
-    public function get enable():Boolean {
+    public function get enabled():Boolean {
         return _target.enabled;
     }
 
@@ -108,7 +106,7 @@ public class ButtonView extends EventDispatcher {
     }
 
     protected function updateEnableState():void {
-        if (_enable) {
+        if (_target.enabled) {
             _target.mouseEnabled = true;
             if (!hasEventListener(MouseEvent.ROLL_OUT)) {
                 setListeners();
@@ -124,7 +122,7 @@ public class ButtonView extends EventDispatcher {
     }
 
     protected function actionTouch(event:Event):void {
-        if (!_enable) {
+        if (!_target.enabled) {
             event.preventDefault();
             event.stopImmediatePropagation();
             return;
@@ -132,26 +130,26 @@ public class ButtonView extends EventDispatcher {
     }
 
     protected function actionUp(event:Event):void {
-        if (!_enable)
+        if (!_target.enabled)
             return;
         state = _prevState;
     }
 
     protected function actionOver(event:Event):void {
-        if (_enable != true) {
+        if (_target.enabled != true) {
             return;
         }
         state = STATE_OVER;
     }
 
     protected function actionOut(event:Event):void {
-        if (!_enable)
+        if (!_target.enabled)
             return;
         state = STATE_NORMAL;
     }
 
     protected function actionDown(event:Event):void {
-        if (!_enable)
+        if (!_target.enabled)
             return;
         _prevState = state;
         state = STATE_DOWN;

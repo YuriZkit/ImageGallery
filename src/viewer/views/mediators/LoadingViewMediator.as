@@ -12,7 +12,6 @@ public class LoadingViewMediator extends Mediator {
     override public function onRegister():void {
         super.onRegister();
         view.createChildren();
-
     }
 }
 }

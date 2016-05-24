@@ -11,16 +11,28 @@ import org.robotlegs.mvcs.Actor;
 public class ViewerModel extends Actor {
     private var _imagesList:Vector.<ImageVO>;
     public var imageSizeChangedSignal:Signal;
+    public var stateChangeSignal:Signal;
     public var resizeSignal:Signal;
     private var _width:Number;
     private var _height:Number;
     private var _imageIdealHeight:uint = 3;
+    private var _currentState:String;
 
     public function ViewerModel() {
         imageSizeChangedSignal = new Signal();
+        stateChangeSignal = new Signal();
         resizeSignal = new Signal();
         super();
         _imagesList = new Vector.<ImageVO>();
+    }
+
+    public function set state(value:String):void {
+        _currentState = value;
+        stateChangeSignal.dispatch(_currentState);
+    }
+
+    public function get state():String {
+        return _currentState;
     }
 
     public function set imageIdealHeight(value:uint):void {

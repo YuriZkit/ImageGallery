@@ -15,7 +15,12 @@ import flash.events.MouseEvent;
 
 import org.osflash.signals.Signal;
 
+import viewer.models.StateConfig;
+
+import viewer.models.ViewerModel;
+
 public class UIVIew extends BaseView {
+
     private var _browseBtn:ButtonView;
     private var _selectBtn:ButtonView;
     private var _browseMC:basebutton;
@@ -37,6 +42,10 @@ public class UIVIew extends BaseView {
         _selectMC = new basebutton();
         _browseMC.txt.text = "ADD";
         _selectMC.txt.text = "SELECT";
+
+        _selectMC.y = 2;
+        _browseMC.y = 2;
+
         _browseBtn = new ButtonView(_browseMC);
         _selectBtn = new ButtonView(_selectMC);
         _browseBtn.addEventListener(MouseEvent.CLICK, onBrowseClick);
@@ -60,6 +69,11 @@ public class UIVIew extends BaseView {
         super.createChildren();
     }
 
+    public function updateButtonsState(state:String):void {
+        _sliderMC.enabled = _selectBtn.enabled = (state == StateConfig.GALLERY_STATE);
+        _browseMC.enabled = (state != StateConfig.LOADING_STATE);
+    }
+
     private function onSelectClick(event:MouseEvent):void {
 
     }
@@ -78,9 +92,9 @@ public class UIVIew extends BaseView {
 
     private function drawHorizontalLine():void {
         _horizontalLine.graphics.clear();
-        _horizontalLine.graphics.lineStyle(4,0x0000FF);
+        _horizontalLine.graphics.lineStyle(4,0xF4F4F4);
         _horizontalLine.graphics.lineTo(_hudWidth, 0);
-        _horizontalLine.y = _browseMC.height + 1;
+        _horizontalLine.y = _browseMC.height + 4;
     }
 
     private function onBrowseClick(event:MouseEvent):void {

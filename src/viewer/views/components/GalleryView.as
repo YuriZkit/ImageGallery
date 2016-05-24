@@ -48,7 +48,7 @@ public class GalleryView extends BaseView {
         _scrollMC         = new scrollBtn();
         _scrollBtn        = new DragButtonView(_scrollMC);
         _scrollMC.visible = false;
-        _scrollBtn.enable = false;
+        _scrollBtn.enabled = false;
         _scrollBtn.positionChangeSignal.add(updateContainerPosition);
         _imgContainer     = new Sprite();
         _tweenScroll      = TweenMax.to(_imgContainer, SCROLL_TWEEN_DURATION, {y: 0, ease: Back.easeOut.config(0.8)});
@@ -117,8 +117,8 @@ public class GalleryView extends BaseView {
 
     private function updateScrollBar():void {
         _totalScrollAmount = _imgContainer.height - _viewRect.height;
-        _scrollBtn.enable  = _scrollMC.visible = _imgContainer.height > _viewRect.height;
-        if (!_scrollBtn.enable) {
+        _scrollBtn.enabled  = _scrollMC.visible = _imgContainer.height > _viewRect.height;
+        if (!_scrollBtn.enabled) {
             removeEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
         } else if (!hasEventListener(MouseEvent.MOUSE_WHEEL)) {
             addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);

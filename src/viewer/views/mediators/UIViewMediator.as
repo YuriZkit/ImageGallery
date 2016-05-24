@@ -22,6 +22,7 @@ public class UIViewMediator extends Mediator {
         view.browseSignal.add(onBrowseSignal);
         view.imageSizeChange.add(onImageSizeChanged);
         model.resizeSignal.add(view.resize);
+        model.stateChangeSignal.add(view.updateButtonsState);
     }
 
     private function onImageSizeChanged(value:uint):void {

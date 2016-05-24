@@ -11,7 +11,7 @@ import viewer.controllers.AddImageToGalleryCommand;
 import viewer.controllers.BrowseCommand;
 import viewer.controllers.ChangeImageSize;
 import viewer.controllers.DisplayImagesCommand;
-import viewer.controllers.IniteStateMachine;
+import viewer.controllers.InitStateMachine;
 import viewer.controllers.ResizeCommand;
 import viewer.events.FileLoaderServiceEvent;
 import viewer.events.GalleryEvent;
@@ -39,7 +39,7 @@ public class ViewerContext extends Context {
         injector.mapSingleton(UIVIew);
         injector.mapSingletonOf(IFileLoaderService, LocalFileLoaderService);
 
-        commandMap.mapEvent(ContextEvent.STARTUP, IniteStateMachine, ContextEvent, true);
+        commandMap.mapEvent(ContextEvent.STARTUP, InitStateMachine, ContextEvent, true);
         commandMap.mapEvent(GalleryEvent.RESIZE, ResizeCommand, GalleryEvent);
         commandMap.mapEvent(FileLoaderServiceEvent.IMAGE_LOADED, AddImageToGalleryCommand, FileLoaderServiceEvent);
         commandMap.mapEvent(FileLoaderServiceEvent.ALL_FILES_LOADED, DisplayImagesCommand, FileLoaderServiceEvent);
@@ -51,9 +51,11 @@ public class ViewerContext extends Context {
         mediatorMap.mapView(Application, ApplicationMediator);
         mediatorMap.mapView(WelcomeView, WelcomeViewMediator);
         mediatorMap.mapView(LoadingView, LoadingViewMediator);
+
         var uiViewDisplayObject = contextView.addChild(new UIVIew());
         contextView.y           = uiViewDisplayObject.height;
         uiViewDisplayObject.y   = -uiViewDisplayObject.height;
+
         dispatchEvent(new ContextEvent(ContextEvent.STARTUP));
         super.startup();
     }
