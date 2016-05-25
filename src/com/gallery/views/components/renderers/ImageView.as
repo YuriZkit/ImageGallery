@@ -2,6 +2,7 @@
  * Created by YuriZkit-Adm on 5/16/2016.
  */
 package com.gallery.views.components.renderers {
+import com.gallery.events.ImageEvent;
 import com.gallery.models.ImageVO;
 import com.greensock.TweenLite;
 
@@ -20,8 +21,7 @@ public class ImageView extends Sprite {
         super();
         imageHeight = idealHeight;
         _mouseDownTimer = new Timer(1000, 1);
-        addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
-        addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+        addEventListener(MouseEvent.CLICK, onClick);
     }
     private var _height:Number;
     private var _fade:TweenLite;
@@ -54,8 +54,13 @@ public class ImageView extends Sprite {
         TweenLite.to(this, 1, {alpha: 0});
     }
 
-    public function onSelect(event:Event):void {
+    public function onClick(event:Event):void {
+        dispatchEvent(new ImageEvent(ImageEvent.IMAGE_SELECTED, _imageVO));
         //TweenLite.to(this,0.5,{colorMatrixFilter:{saturation:0.3}});
+    }
+
+    public function set select(value:Boolean):void {
+        TweenLite.to(this,0.5,{colorMatrixFilter:{saturation:0.3}});
     }
 
     private function onMouseUp(event:MouseEvent):void {

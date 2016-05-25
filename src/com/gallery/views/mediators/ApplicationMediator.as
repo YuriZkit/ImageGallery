@@ -2,7 +2,7 @@
  * Created by YuriZkit-Adm on 5/21/2016.
  */
 package com.gallery.views.mediators {
-import com.gallery.events.GalleryEvent;
+import com.gallery.events.ResizeEvent;
 
 import flash.events.Event;
 import flash.events.TimerEvent;
@@ -23,7 +23,7 @@ public class ApplicationMediator extends Mediator {
     }
 
     private function callResizeCommand(event:TimerEvent):void {
-        dispatch(new GalleryEvent(GalleryEvent.RESIZE, view.stage.stageWidth, view.stage.stageHeight));
+        dispatch(new ResizeEvent(ResizeEvent.RESIZE, view.stage.stageWidth, view.stage.stageHeight));
     }
 
     private function onResize(event:Event):void {

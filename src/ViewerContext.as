@@ -14,9 +14,9 @@ import com.gallery.controllers.DisplayImagesCommand;
 import com.gallery.controllers.InitStateMachine;
 import com.gallery.controllers.ResizeCommand;
 import com.gallery.events.FileLoaderServiceEvent;
-import com.gallery.events.GalleryEvent;
+import com.gallery.events.ResizeEvent;
 import com.gallery.events.TopHudEvent;
-import com.gallery.models.ViewerModel;
+import com.gallery.models.GalleryModel;
 import com.gallery.services.IFileLoaderService;
 import com.gallery.services.LocalFileLoaderService;
 import com.gallery.views.components.GalleryView;
@@ -35,12 +35,12 @@ public class ViewerContext extends Context {
     }
 
     override public function startup():void {
-        injector.mapSingleton(ViewerModel);
+        injector.mapSingleton(GalleryModel);
         injector.mapSingleton(TopHUDView);
         injector.mapSingletonOf(IFileLoaderService, LocalFileLoaderService);
 
         commandMap.mapEvent(ContextEvent.STARTUP, InitStateMachine, ContextEvent, true);
-        commandMap.mapEvent(GalleryEvent.RESIZE, ResizeCommand, GalleryEvent);
+        commandMap.mapEvent(ResizeEvent.RESIZE, ResizeCommand, ResizeEvent);
         commandMap.mapEvent(FileLoaderServiceEvent.IMAGE_LOADED, AddImageToGalleryCommand, FileLoaderServiceEvent);
         commandMap.mapEvent(FileLoaderServiceEvent.ALL_FILES_LOADED, DisplayImagesCommand, FileLoaderServiceEvent);
         commandMap.mapEvent(TopHudEvent.ACTION_BROWSE, BrowseCommand, TopHudEvent);

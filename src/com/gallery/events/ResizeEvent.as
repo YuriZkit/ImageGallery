@@ -4,10 +4,10 @@
 package com.gallery.events {
 import flash.events.Event;
 
-public class GalleryEvent extends Event {
+public class ResizeEvent extends Event {
     public static const RESIZE:String = "resize";
 
-    public function GalleryEvent(type:String, width:int, height:int, bubbles:Boolean = false, cancelable:Boolean = false) {
+    public function ResizeEvent(type:String, width:int, height:int, bubbles:Boolean = false, cancelable:Boolean = false) {
         _width = width;
         _height = height;
         super(type, bubbles, cancelable);

@@ -3,16 +3,16 @@
  */
 package com.gallery.controllers {
 
-import com.gallery.events.GalleryEvent;
-import com.gallery.models.ViewerModel;
+import com.gallery.events.ResizeEvent;
+import com.gallery.models.GalleryModel;
 
 import org.robotlegs.mvcs.Command;
 
 public class ResizeCommand extends Command {
     [Inject]
-    public var event:GalleryEvent;
+    public var event:ResizeEvent;
     [Inject]
-    public var galleryModel:ViewerModel;
+    public var galleryModel:GalleryModel;
 
     override public function execute():void {
         galleryModel.resize(event.width, event.height - contextView.getChildAt(1).height);

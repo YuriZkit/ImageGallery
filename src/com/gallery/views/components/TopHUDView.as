@@ -8,7 +8,6 @@ import base.BaseView;
 import base.ui.ButtonView;
 
 import com.gallery.models.GalleryState;
-
 import fl.controls.Slider;
 import fl.events.SliderEvent;
 
@@ -85,8 +84,8 @@ public class TopHUDView extends BaseView {
     }
 
     public function updateButtonsState(state:String):void {
-        _sliderMC.enabled = _selectBtn.enabled = (state == GalleryState.GALLERY_STATE);
-        _browseMC.enabled = (state != GalleryState.LOADING_STATE);
+        _sliderMC.enabled = _selectBtn.enabled = (state == GalleryState.STATE_GALLERY);
+        _browseMC.enabled = (state != GalleryState.STATE_LOADING);
     }
 
     private function drawHorizontalLine():void {

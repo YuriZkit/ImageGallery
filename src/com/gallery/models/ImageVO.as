@@ -5,13 +5,20 @@ package com.gallery.models {
 import flash.display.BitmapData;
 
 public class ImageVO {
-    public function ImageVO(id:uint, data:BitmapData) {
+    private var _id:String;
+    public function ImageVO(id:String, data:BitmapData) {
+        _id = id;
         _data = data;
     }
+
     private var _data:BitmapData;
 
     public function get bitmapData():BitmapData {
         return _data;
+    }
+
+    public function get id():String {
+        return _id;
     }
 }
 }

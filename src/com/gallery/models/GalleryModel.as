@@ -3,22 +3,27 @@
  */
 package com.gallery.models {
 import flash.display.Bitmap;
+import flash.utils.Dictionary;
 
 import org.osflash.signals.Signal;
 import org.robotlegs.mvcs.Actor;
 
-public class ViewerModel extends Actor {
-    public function ViewerModel() {
+public class GalleryModel extends Actor {
+    public function GalleryModel() {
         imageSizeChangedSignal = new Signal();
         stateChangeSignal = new Signal();
         resizeSignal = new Signal();
+        imageSelectionChanged = new Signal();
         super();
         _imagesList = new Vector.<ImageVO>();
+        _selectedImages = new Dictionary();
     }
     public var imageSizeChangedSignal:Signal;
     public var stateChangeSignal:Signal;
     public var resizeSignal:Signal;
+    public var imageSelectionChanged:Signal;
     private var _currentState:String;
+    private var _selectedImages:Dictionary;
 
     private var _imagesList:Vector.<ImageVO>;
 
@@ -53,6 +58,29 @@ public class ViewerModel extends Actor {
         return _currentState;
     }
 
+    public function selectImage(imageVO:ImageVO):void{
+        if(_selectedImages[imageVO]){
+            unselectImage(imageVO);
+        } else {
+            _selectedImages[imageVO] = imageVO.id;
+        }
+        imageSelectionChanged.dispatch();
+    }
+
+    public function unselectImage(imageVO:ImageVO):void {
+        delete _selectedImages[imageVO];
+    }
+
+    public function unselectAllImages():void {
+        for (var imageVO:ImageVO in _selectedImages){
+            unselectImage(imageVO);
+        }
+    }
+
+    public function deleteImage(imageVO:ImageVO):void {
+        var imgToDelete:ImageVO = _imagesList[imageVO.id];
+    }
+
     public function set state(value:String):void {
         _currentState = value;
         stateChangeSignal.dispatch(_currentState);
@@ -65,7 +93,7 @@ public class ViewerModel extends Actor {
     }
 
     public function addImage(bitmap:Bitmap):void {
-        _imagesList.push(new ImageVO(_imagesList.length, bitmap.bitmapData));
+        _imagesList.push(new ImageVO(_imagesList.length.toString(), bitmap.bitmapData));
     }
 }
 }

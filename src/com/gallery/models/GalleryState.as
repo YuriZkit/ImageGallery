@@ -3,9 +3,9 @@
  */
 package com.gallery.models {
 public class GalleryState {
-    public static const WELCOME_STATE:String = "state/welcomeState";
-    public static const LOADING_STATE:String = "state/loadingState";
-    public static const GALLERY_STATE:String = "state/galleryState";
+    public static const STATE_WELCOME:String = "state/welcomeState";
+    public static const STATE_LOADING:String = "state/loadingState";
+    public static const STATE_GALLERY:String = "state/galleryState";
 
     public static const DISPLAY_WELCOME:String = "event/displayWelcome";
     public static const DISPLAY_LOADER:String = "event/displayLoader";
@@ -15,18 +15,18 @@ public class GalleryState {
     public static const LOADING_COMPLETED:String = "action/loadingCompleted";
 
     public static const FSM:XML =
-            <fsm initial={WELCOME_STATE}>
-                <state name={WELCOME_STATE} changed={DISPLAY_WELCOME}>
+            <fsm initial={STATE_WELCOME}>
+                <state name={STATE_WELCOME} changed={DISPLAY_WELCOME}>
                     <transition action={LOADING_STARTED}
-                                target={LOADING_STATE}/>
+                                target={STATE_LOADING}/>
                 </state>
-                <state name={LOADING_STATE} changed={DISPLAY_LOADER}>
+                <state name={STATE_LOADING} changed={DISPLAY_LOADER}>
                     <transition action={LOADING_COMPLETED}
-                                target={GALLERY_STATE}/>
+                                target={STATE_GALLERY}/>
                 </state>
-                <state name={GALLERY_STATE} changed={DISPLAY_GALLERY}>
+                <state name={STATE_GALLERY} changed={DISPLAY_GALLERY}>
                     <transition action={LOADING_STARTED}
-                                target={LOADING_STATE}/>
+                                target={STATE_LOADING}/>
                 </state>
             </fsm>;
 }
